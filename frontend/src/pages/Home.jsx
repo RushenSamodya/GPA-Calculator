@@ -10,6 +10,28 @@ const Home = () => {
   const {modules, dispatch} = useModulesContext();
   const {user} = useAuthContext();
 
+  const groupModulesBySemester = (modules) => {
+    const groupedModules = {};
+  
+    if (!modules) {
+      return groupedModules;
+    }
+  
+    modules.forEach((module) => {
+      const semester = module.semester;
+  
+      if (!groupedModules[semester]) {
+        groupedModules[semester] = [];
+      }
+  
+      groupedModules[semester].push(module);
+    });
+  
+    return groupedModules;
+  };
+
+  const groupedModules = groupModulesBySemester(modules);
+
   useEffect(() => {
     const fetchModules = async () => {
       const response = await fetch("http://localhost:8000/api/v1/module", {
@@ -31,11 +53,18 @@ const Home = () => {
 
   return (
     <div className="home">
+      <div className="moduleList">
+        {Object.entries(groupedModules).map(([semester, semesterModules]) => (
+      <div key={semester} className="semester">
+        <h2>Semester {semester}</h2>
         <div className="modules">
-          {modules && modules.map((module)=>(
-            <ModuleDetails key={module._id} module={module}/>
+          {semesterModules.map((module) => (
+            <ModuleDetails key={module._id} module={module} />
           ))}
         </div>
+      </div>
+    ))}
+    </div>
         <ModuleForm/>
     </div>
   )

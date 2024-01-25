@@ -1,16 +1,15 @@
+
 import { useModulesContext } from '../hooks/useModulesContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useAuthContext } from '../hooks/useAuthContext';
 
 const ModuleDetails = ({ module }) => {
-
   const { dispatch } = useModulesContext();
   const { user } = useAuthContext();
 
   const handleCLick = async () => {
-
-    if(!user){
+    if (!user) {
       console.log("You must be logged in to delete a module");
       return;
     }
@@ -23,9 +22,9 @@ const ModuleDetails = ({ module }) => {
     });
     const json = await response.json();
 
-    if(response.ok){
+    if (response.ok) {
       console.log("module deleted successfully");
-      dispatch({type: 'DELETE_MODULE', payload:json.module});
+      dispatch({ type: 'DELETE_MODULE', payload: json.module });
     }
   }
 
@@ -41,8 +40,13 @@ const ModuleDetails = ({ module }) => {
       <p>
         <strong>Weight: </strong> {module.weight}
       </p>
+      {module.result && (
+        <p>
+        <strong>Result: </strong> {module.result}
+      </p>
+      )}
       <div>
-      <span onClick={handleCLick}><FontAwesomeIcon icon={faTrash} color='#e7195a'/></span>
+        <span onClick={handleCLick}><FontAwesomeIcon icon={faTrash} color='#e7195a' /></span>
       </div>
     </div>
   );

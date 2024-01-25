@@ -4,6 +4,8 @@ import Navbar from './components/Navbar'
 import Login from './pages/Login'
 import Signup from './pages/SignUp'
 import { useAuthContext } from './hooks/useAuthContext'
+import GPACalculator from './pages/GPACalculator'
+import ModulesListPage from './pages/ModulesListPage'
 
 function App() {
 
@@ -22,6 +24,12 @@ function App() {
           </Routes>
           <Routes>
             <Route path="/signup" element={!user ? <Signup/>: <Navigate to="/"/>} />
+          </Routes>
+          <Routes>
+            <Route path="/calculator" element={ user ? <GPACalculator/>: <Navigate to="/"/>} />
+          </Routes>
+          <Routes>
+            <Route path="/module-list" element={ user ? <ModulesListPage/>: <Navigate to="/"/>} />
           </Routes>
         </div>
       </BrowserRouter>

@@ -93,10 +93,94 @@ const updateModule = async (req, res) => {
   res.status(200).json({ message: "Module updated successfully" });
 };
 
+// Calculate Semester GPA
+const calculateSemesterGPA = async (req, res) => {
+  const { semester } = req.params;
+  const user_id = req.user._id;
+
+  try {
+    // Fetch modules for the specific semester and user
+    const modules = await Module.find({ user_id, semester });
+
+    if (!modules || modules.length === 0) {
+      return res.status(404).json({ error: `No modules found for Semester ${semester}` });
+    }
+
+    // Calculate Semester GPA based on the weighted average
+    const totalWeightedCredits = modules.reduce((acc, module) => {
+      return acc + module.weight * calculateGPAFromResult(module.result);
+    }, 0);
+
+    const totalWeight = modules.reduce((acc, module) => {
+      return acc + module.weight;
+    }, 0);
+
+    const semesterGPA = totalWeightedCredits / totalWeight;
+
+    res.status(200).json({ semesterGPA });
+  } catch (error) {
+    res.status(500).json({ error: 'Error calculating Semester GPA' });
+  }
+};
+
+// Helper function to convert result to GPA
+const calculateGPAFromResult = (result) => {
+  // Implement your logic to convert the result to GPA
+  // Example: A, A-, B+, B, B-, C+, C, C-, D, F
+  // You can assign GPA values accordingly
+
+  // For simplicity, assuming an arbitrary mapping
+  const gpaMapping = {
+    'A': 4.0,
+    'A-': 3.7,
+    'B+': 3.3,
+    'B': 3.0,
+    'B-': 2.7,
+    'C+': 2.3,
+    'C': 2.0,
+    'C-': 1.7,
+    'D': 1.0,
+    'F': 0.0,
+  };
+
+  return gpaMapping[result] || 0.0;
+};
+
+// Calculate Total GPA
+const calculateTotalGPA = async (req, res) => {
+  const user_id = req.user._id;
+
+  try {
+    // Fetch all modules for the user
+    const modules = await Module.find({ user_id });
+
+    if (!modules || modules.length === 0) {
+      return res.status(404).json({ error: 'No modules found' });
+    }
+
+    // Calculate Total GPA based on the weighted average
+    const totalWeightedCredits = modules.reduce((acc, module) => {
+      return acc + module.weight * calculateGPAFromResult(module.result);
+    }, 0);
+
+    const totalWeight = modules.reduce((acc, module) => {
+      return acc + module.weight;
+    }, 0);
+
+    const totalGPA = totalWeightedCredits / totalWeight;
+
+    res.status(200).json({ totalGPA });
+  } catch (error) {
+    res.status(500).json({ error: 'Error calculating Total GPA' });
+  }
+};
+
 module.exports = {
-    getAllModules,
-    getSingleModule,
-    createModule,
-    deleteModule,
-    updateModule,
+  getAllModules,
+  getSingleModule,
+  createModule,
+  deleteModule,
+  updateModule,
+  calculateSemesterGPA,
+  calculateTotalGPA,
 };

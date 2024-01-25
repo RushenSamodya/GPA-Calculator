@@ -18,6 +18,7 @@ header .nav-container {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  gap: 100px;
 }
 header .container {
   max-width: 1400px;
@@ -51,7 +52,7 @@ header a {
   margin: 20px auto;
   padding: 20px;
   position: relative;
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.05);
 }
 .module-details h4 {
   margin: 0 0 10px 0;
@@ -112,6 +113,7 @@ nav {
   align-items: center;
   justify-content: flex-end;
 }
+
 nav a, nav button {
   margin-left: 10px;
 }
@@ -133,4 +135,14 @@ form.signup, form.login {
   padding: 20px;
   background: #fff;
   border-radius: 4px;
+}
+
+button {
+  background: var(--primary);
+  border: 0;
+  color: #fff;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 4px;
+  cursor: pointer;
 }
