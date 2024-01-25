@@ -15,7 +15,7 @@ const ModuleDetails = ({ module }) => {
       return;
     }
 
-    const response = await fetch(`http://localhost:4000/api/v1/module/${module._id}`, {
+    const response = await fetch(`http://localhost:8000/api/v1/module/${module._id}`, {
       method: "DELETE",
       headers: {
         'Authorization': `Bearer ${user.token}`,
