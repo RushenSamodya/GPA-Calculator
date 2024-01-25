@@ -18,10 +18,10 @@ const Navbar = () => {
         <h3>Module List</h3>
       </Link>
       <Link to="/calculator">
-        <h3>GPA Calculator</h3>
+        <h3>Add Results</h3>
       </Link>
       <Link to="/module-list">
-        <h3>Semester GPA</h3>
+        <h3>GPA Calculator</h3>
       </Link>
       </div>}
       {!user && <h3>GPA Calculator</h3>}

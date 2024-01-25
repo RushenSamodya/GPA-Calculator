@@ -85,11 +85,32 @@ const ModulesListPage = () => {
     }
   }, [user]);
 
+  const calculateTotalGPA = () => {
+    const semesterGPAs = [];
+    //write a function to get each semester GPAs numbers to the semesterGPAs array
+    Object.entries(groupedModules).forEach(([semester, modules]) => {
+      const semesterGPA = modules[0].semesterGPA; // Assuming semesterGPA is available in each module
+      semesterGPAs.push(semesterGPA);
+    });
+    //get the total no of semesters to a const
+    const totalSemesters = semesterGPAs.length;
+    //add each semester gpa and divide by total no of semesters
+    let totalGPA = 0;
+    for (let i = 0; i < totalSemesters; i++) {
+      totalGPA += semesterGPAs[i];
+      console.log(totalGPA);
+    }
+    totalGPA = totalGPA / totalSemesters;
+    console.log(totalGPA);
+    return totalGPA;
+  };
+
   return (
     <div className="modules-list-page">
       {Object.entries(groupedModules).map(([semester, modules]) => (
         <SemesterPage key={semester} semester={semester} modules={modules} />
       ))}
+      <h3 style={{color:"#e7195a"}}>Total GPA:{calculateTotalGPA()}</h3>
     </div>
   );
 };

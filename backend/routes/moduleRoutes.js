@@ -24,10 +24,11 @@ router.delete('/:id', deleteModule);
 // Update a module
 router.patch('/:id', updateModule);
 
+// Calculate Total GPA
+router.get('/calculate-total-gpa', calculateTotalGPA);
+
 // Calculate Semester GPA
 router.get('/calculate-semester-gpa/:semester', calculateSemesterGPA);
 
-// Calculate Total GPA
-router.get('/calculate-total-gpa', calculateTotalGPA);
 
 module.exports = router;
