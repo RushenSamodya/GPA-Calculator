@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useAuthContext } from '../hooks/useAuthContext';
 
-const ModuleDetails = ({ module }) => {
+const RemovedModuleDetails = ({ module, bgColour }) => {
 
   const { dispatch } = useModulesContext();
   const { user } = useAuthContext();
@@ -15,7 +15,7 @@ const ModuleDetails = ({ module }) => {
       return;
     }
 
-    const response = await fetch(`http://localhost:8000/api/v1/module/${module._id}`, {
+    const response = await fetch(`http://localhost:8000/api/v1/repeated/${module._id}`, {
       method: "DELETE",
       headers: {
         'Authorization': `Bearer ${user.token}`,
@@ -30,13 +30,10 @@ const ModuleDetails = ({ module }) => {
   }
 
   return (
-    <div className="module-details">
-      <h4 style={{}}>{module.title}</h4>
+    <div className="module-details" >
+      <h4 style={{color: bgColour}}>{module.title}</h4>
       <p>
         <strong>Code: </strong> {module.code}
-      </p>
-      <p>
-        <strong>Semester: </strong> {module.semester}
       </p>
       <p>
         <strong>Weight: </strong> {module.weight}
@@ -48,4 +45,4 @@ const ModuleDetails = ({ module }) => {
   );
 };
 
-export default ModuleDetails;
+export default RemovedModuleDetails;

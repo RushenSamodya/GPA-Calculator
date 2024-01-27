@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const ModuleRoutes = require("./routes/moduleRoutes");
 const UserRoutes = require("./routes/userRoutes");
 const SelectiveRoutes = require("./routes/selectiveRoutes");
+const RepeatedRoutes = require("./routes/repeatedRoutes");
 const cors = require("cors");
 
 // Create express app
@@ -29,6 +30,7 @@ app.use(express.json());
 app.use("/api/v1/module", ModuleRoutes);
 app.use("/api/v1/user", UserRoutes);
 app.use("/api/v1/selective", SelectiveRoutes);
+app.use("/api/v1/repeated", RepeatedRoutes);
 
 // Connect to database
 mongoose

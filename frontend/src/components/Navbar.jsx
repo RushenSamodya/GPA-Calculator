@@ -26,6 +26,9 @@ const Navbar = () => {
       <Link to="/gpa-predictor">
         <h3>GPA Predictor</h3>
       </Link>
+      <Link to="/repeat-modules">
+        <h3>Repeat Modules</h3>
+      </Link>
       </div>}
       {!user && <h3>GPA Calculator</h3>}
       <nav >
