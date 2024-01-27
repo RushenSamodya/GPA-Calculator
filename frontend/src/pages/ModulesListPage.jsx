@@ -46,9 +46,11 @@ const SemesterPage = ({ semester, modules }) => {
   );
 };
 
+
 const ModulesListPage = () => {
   const { user } = useAuthContext();
   const [groupedModules, setGroupedModules] = useState({});
+  const [GPA, setGPA] = useState(null);
 
   useEffect(() => {
     const fetchModules = async () => {
@@ -85,32 +87,36 @@ const ModulesListPage = () => {
     }
   }, [user]);
 
-  const calculateTotalGPA = () => {
-    const semesterGPAs = [];
-    //write a function to get each semester GPAs numbers to the semesterGPAs array
-    Object.entries(groupedModules).forEach(([semester, modules]) => {
-      const semesterGPA = modules[0].semesterGPA; // Assuming semesterGPA is available in each module
-      semesterGPAs.push(semesterGPA);
-    });
-    //get the total no of semesters to a const
-    const totalSemesters = semesterGPAs.length;
-    //add each semester gpa and divide by total no of semesters
-    let totalGPA = 0;
-    for (let i = 0; i < totalSemesters; i++) {
-      totalGPA += semesterGPAs[i];
-      console.log(totalGPA);
-    }
-    totalGPA = totalGPA / totalSemesters;
-    console.log(totalGPA);
-    return totalGPA;
-  };
+  useEffect(() => {
+    // Function to fetch semester GPA
+    const fetchTotalGPA = async () => {
+      try {
+        const response = await fetch(`http://localhost:8000/api/v1/module/calculate-semester-gpa/1`, {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        });
+
+        if (response.ok) {
+          const json = await response.json();
+          setGPA(json.totalGPA);
+        } else {
+          console.error("Error fetching total GPA");
+        }
+      } catch (error) {
+        console.error("Error fetching total GPA:", error.message);
+      }
+    };
+
+    fetchTotalGPA();
+  }, []);
 
   return (
     <div className="modules-list-page">
       {Object.entries(groupedModules).map(([semester, modules]) => (
         <SemesterPage key={semester} semester={semester} modules={modules} />
       ))}
-      <h3 style={{color:"#e7195a"}}>Total GPA:{calculateTotalGPA()}</h3>
+      <h3 style={{color:"#e7195a"}}>Total GPA: {GPA}</h3>
     </div>
   );
 };

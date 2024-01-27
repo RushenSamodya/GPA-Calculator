@@ -117,7 +117,19 @@ const calculateSemesterGPA = async (req, res) => {
 
     const semesterGPA = totalWeightedCredits / totalWeight;
 
-    res.status(200).json({ semesterGPA });
+    //total gpa here as well
+    const allModules = await Module.find({ user_id });
+    const totalWeightedCreditsAll = allModules.reduce((acc, module) => {
+      return acc + module.weight * calculateGPAFromResult(module.result);
+    }, 0);
+    
+    const totalWeightAll = allModules.reduce((acc, module) => {
+      return acc + module.weight;
+    }, 0);
+    
+    const totalGPA = totalWeightedCreditsAll / totalWeightAll;
+
+    res.status(200).json({ semesterGPA, totalGPA, totalWeightAll  });
   } catch (error) {
     res.status(500).json({ error: 'Error calculating Semester GPA' });
   }
@@ -147,41 +159,25 @@ const calculateGPAFromResult = (result) => {
 };
 
 // Calculate Total GPA
-const calculateTotalGPA = async (req, res) => {
+const getTotalGPA = async (req, res) => {
   const user_id = req.user._id;
 
   try {
-    // Fetch all modules for the user
-    const allModules = await Module.find({ user_id });
+    // Fetch all modules for the specific user
+    const modules = await Module.find({ user_id });
 
-    if (!allModules || allModules.length === 0) {
+    if (!modules || modules.length === 0) {
       return res.status(404).json({ error: 'No modules found for the user' });
     }
 
-    // Create a map to store total weighted credits and total weight for each semester
-    const semesterDataMap = new Map();
+    // Calculate Total GPA based on the weighted average of all modules
+    const totalWeightedCredits = modules.reduce((acc, module) => {
+      return acc + module.weight * calculateGPAFromResult(module.result);
+    }, 0);
 
-    // Calculate total weighted credits and total weight for each semester
-    allModules.forEach((module) => {
-      const semester = module.semester;
-      const weightedCredits = module.weight * calculateGPAFromResult(module.result);
-
-      if (!semesterDataMap.has(semester)) {
-        semesterDataMap.set(semester, { totalWeightedCredits: 0, totalWeight: 0 });
-      }
-
-      semesterDataMap.get(semester).totalWeightedCredits += weightedCredits;
-      semesterDataMap.get(semester).totalWeight += module.weight;
-    });
-
-    // Calculate total GPA across all semesters
-    let totalWeightedCredits = 0;
-    let totalWeight = 0;
-
-    semesterDataMap.forEach((semesterData) => {
-      totalWeightedCredits += semesterData.totalWeightedCredits;
-      totalWeight += semesterData.totalWeight;
-    });
+    const totalWeight = modules.reduce((acc, module) => {
+      return acc + module.weight;
+    }, 0);
 
     const totalGPA = totalWeightedCredits / totalWeight;
 
@@ -191,6 +187,7 @@ const calculateTotalGPA = async (req, res) => {
   }
 };
 
+
 module.exports = {
   getAllModules,
   getSingleModule,
@@ -198,5 +195,5 @@ module.exports = {
   deleteModule,
   updateModule,
   calculateSemesterGPA,
-  calculateTotalGPA,
+  getTotalGPA,
 };

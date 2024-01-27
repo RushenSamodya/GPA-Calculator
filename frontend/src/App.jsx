@@ -6,6 +6,7 @@ import Signup from './pages/SignUp'
 import { useAuthContext } from './hooks/useAuthContext'
 import GPACalculator from './pages/GPACalculator'
 import ModulesListPage from './pages/ModulesListPage'
+import GpaPredictor from './pages/GpaPredictor'
 
 function App() {
 
@@ -30,6 +31,9 @@ function App() {
           </Routes>
           <Routes>
             <Route path="/module-list" element={ user ? <ModulesListPage/>: <Navigate to="/"/>} />
+          </Routes>
+          <Routes>
+            <Route path="/gpa-predictor" element={ user ? <GpaPredictor/>: <Navigate to="/"/>} />
           </Routes>
         </div>
       </BrowserRouter>

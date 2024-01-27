@@ -23,6 +23,9 @@ const Navbar = () => {
       <Link to="/module-list">
         <h3>GPA Calculator</h3>
       </Link>
+      <Link to="/gpa-predictor">
+        <h3>GPA Predictor</h3>
+      </Link>
       </div>}
       {!user && <h3>GPA Calculator</h3>}
       <nav >

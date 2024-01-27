@@ -1,5 +1,5 @@
 const express = require('express');
-const { getAllModules, getSingleModule, createModule, deleteModule, updateModule, calculateSemesterGPA, calculateTotalGPA } = require('../controllers/moduleController');
+const { getAllModules, getSingleModule, createModule, deleteModule, updateModule, calculateSemesterGPA, getTotalGPA, getNumberOfSemesters } = require('../controllers/moduleController');
 const requireAuth = require('../middleware/requireAuth');
 
 const router = express.Router();
@@ -24,11 +24,10 @@ router.delete('/:id', deleteModule);
 // Update a module
 router.patch('/:id', updateModule);
 
-// Calculate Total GPA
-router.get('/calculate-total-gpa', calculateTotalGPA);
-
 // Calculate Semester GPA
 router.get('/calculate-semester-gpa/:semester', calculateSemesterGPA);
 
+// calculate Total GPA
+router.get('/calculate-total-gpa', getTotalGPA);
 
 module.exports = router;

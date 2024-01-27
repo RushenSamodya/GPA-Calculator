@@ -1,6 +1,6 @@
 import { useModulesContext } from '../hooks/useModulesContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useAuthContext } from '../hooks/useAuthContext';
 
 const ModuleDetails = ({ module }) => {

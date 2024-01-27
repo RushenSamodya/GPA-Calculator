@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const ModuleRoutes = require("./routes/moduleRoutes");
 const UserRoutes = require("./routes/userRoutes");
+const SelectiveRoutes = require("./routes/selectiveRoutes");
 const cors = require("cors");
 
 // Create express app
@@ -27,6 +28,7 @@ app.use(express.json());
 // Routes
 app.use("/api/v1/module", ModuleRoutes);
 app.use("/api/v1/user", UserRoutes);
+app.use("/api/v1/selective", SelectiveRoutes);
 
 // Connect to database
 mongoose
