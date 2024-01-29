@@ -18,6 +18,9 @@ const selectiveSchema = new Schema({
     weight: {
         type: Number,
         required: true
+    },
+    combinationType: {
+        type: String,
     }
 },
     { timestamps: true }

@@ -133,25 +133,114 @@ const GpaPredictor = () => {
         <TabPanel>
           <h3>Total Credits Required: {90 - totalWeight}</h3>
           <p>Current GPA: {currentGPA}</p>
-          <div>
-            <h4 style={{ fontWeight: "bold" }}>General Modules</h4>
-            {generalModules.map((module) => (
-              <ModuleDetails key={module._id} module={module} />
-            ))}
-          </div>
+          <h4 style={{ fontWeight: "bold" }}>General Modules</h4>
+
+          <Tabs>
+            <TabList>
+              <Tab style={{ color: "#000000" }}>Combination 1</Tab>
+              <Tab style={{ color: "#000000" }}>Combination 2</Tab>
+              <Tab style={{ color: "#000000" }}>Combination 3</Tab>
+            </TabList>
+
+            {/* General Combination 1 */}
+            <TabPanel>
+            <div>
+              {generalModules
+                .filter((module) => module.combinationType === "1")
+                .map((module) => (
+                  <ModuleDetails key={module._id} module={module} />
+                ))}
+            </div>
+
+            </TabPanel>  
+
+            {/* General Combination 2 */}
+            <TabPanel>
+            <div>
+              {generalModules
+                .filter((module) => module.combinationType === "2")
+                .map((module) => (
+                  <ModuleDetails key={module._id} module={module} />
+                ))}
+            </div>
+              
+            </TabPanel> 
+              {/* General Combination 3 */}
+            <TabPanel>
+            <div>
+              {generalModules
+                .filter((module) => module.combinationType === "3")
+                .map((module) => (
+                  <ModuleDetails key={module._id} module={module} />
+                ))}
+            </div>
+              
+            </TabPanel> 
+
+          </Tabs>
         </TabPanel>
 
         <TabPanel>
           <h3>Total Credits Required: {120 - totalWeight}</h3>
           <p>Current GPA: {currentGPA}</p>
-          <p>Current Semester: {currentSemester}</p>
+          <h4 style={{ fontWeight: "bold" }}>Special Modules</h4>
 
-          <div>
-            <h4 style={{ fontWeight: "bold" }}>Special Modules</h4>
-            {specialModules.map((module) => (
-              <ModuleDetails key={module._id} module={module} />
-            ))}
-          </div>
+          <Tabs>
+            <TabList>
+              <Tab style={{ color: "#000000" }}>Combination 1</Tab>
+              <Tab style={{ color: "#000000" }}>Combination 2</Tab>
+              <Tab style={{ color: "#000000" }}>Combination 3</Tab>
+              <Tab style={{ color: "#000000" }}>Combination 4</Tab>
+            </TabList>
+
+            {/* General Combination 1 */}
+            <TabPanel>
+            <div>
+              
+              {generalModules
+                .filter((module) => module.combinationType === "1")
+                .map((module) => (
+                  <ModuleDetails key={module._id} module={module} />
+                ))}
+            </div>
+            </TabPanel>  
+
+            {/* General Combination 2 */}
+            <TabPanel>
+            <div>
+              {generalModules
+                .filter((module) => module.combinationType === "2")
+                .map((module) => (
+                  <ModuleDetails key={module._id} module={module} />
+                ))}
+            </div>
+            </TabPanel> 
+
+            {/* General Combination 3 */}
+            <TabPanel>
+            <div>
+              {generalModules
+                .filter((module) => module.combinationType === "4")
+                .map((module) => (
+                  <ModuleDetails key={module._id} module={module} />
+                ))}
+            </div>
+            </TabPanel> 
+
+            {/* General Combination 4 */}
+            <TabPanel>
+            <div>
+              {generalModules
+                .filter((module) => module.combinationType === "4")
+                .map((module) => (
+                  <ModuleDetails key={module._id} module={module} />
+                ))}
+            </div>
+            </TabPanel> 
+
+          </Tabs>
+
+    
         </TabPanel>
       </Tabs>
 

@@ -13,10 +13,10 @@ const getAllSelectiveModules = async (req, res) => {
   
   // Create a selective module
   const createSelectiveModule = async (req, res) => {
-    const { title, isSpecial, code, weight } = req.body;
+    const { title, isSpecial, code, weight, combinationType } = req.body;
   
     try {
-      const selectiveModule = await SelectiveModule.create({ title, isSpecial, code, weight });
+      const selectiveModule = await SelectiveModule.create({ title, isSpecial, code, weight, combinationType });
       res.status(200).json({ selectiveModule });
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -26,14 +26,14 @@ const getAllSelectiveModules = async (req, res) => {
   // Update a selective module
   const updateSelectiveModule = async (req, res) => {
     const { id } = req.params;
-    const { title, isSpecial, code, weight } = req.body;
+    const { title, isSpecial, code, weight, combinationType } = req.body;
   
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ error: "Invalid object Id" });
     }
   
     try {
-      const selectiveModule = await SelectiveModule.findOneAndUpdate({ _id: id }, { title, isSpecial, code, weight }, { new: true });
+      const selectiveModule = await SelectiveModule.findOneAndUpdate({ _id: id }, { title, isSpecial, code, weight, combinationType }, { new: true });
   
       if (!selectiveModule) {
         return res.status(404).json({ error: "Selective module not found" });
