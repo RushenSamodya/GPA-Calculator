@@ -30,7 +30,7 @@ const Navbar = () => {
         <h3>Repeat Modules</h3>
       </Link>
       </div>}
-      {!user && <h3>GPA Calculator</h3>}
+      {!user && <h3 style={{fontSize:"30px"}}>Student Management System</h3>}
       <nav >
         { user && (<div>
           <span>{user.email}</span>

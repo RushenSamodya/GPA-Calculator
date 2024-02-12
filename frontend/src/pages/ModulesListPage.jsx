@@ -30,18 +30,27 @@ const SemesterPage = ({ semester, modules }) => {
   }, [user, semester]);
 
   return (
-    <div className="semester-container" style={{marginBottom: "80px"}}>
+    <div className="semester-container" style={{ marginBottom: "80px" }}>
       <h2>Semester {semester}</h2>
-      <div className="module-list">
-        {modules.map((module) => (
-          <div key={module._id} className="module-row" style={{display:"flex", gap: "40px"}}>
-            <p>{module.title}</p>
-            <p>Code: {module.code}</p>
-            <p>Result: {module.result}</p>
-          </div>
-        ))}
-      </div>
-      <h3 style={{color:"#1aac83"}}>Semester GPA: {semesterGPA}</h3>
+      <table className="modules-table">
+        <thead>
+          <tr>
+            <th>Module</th>
+            <th>Code</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          {modules.map((module) => (
+            <tr key={module._id}>
+              <td>{module.title}</td>
+              <td>{module.code}</td>
+              <td>{module.result}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <h3 style={{ color: "#1aac83" }}>Semester GPA: {semesterGPA}</h3>
     </div>
   );
 };
@@ -50,7 +59,7 @@ const SemesterPage = ({ semester, modules }) => {
 const ModulesListPage = () => {
   const { user } = useAuthContext();
   const [groupedModules, setGroupedModules] = useState({});
-  const [GPA, setGPA] = useState(null);
+  const [totalGPA, setTotalGPA] = useState(null);
 
   useEffect(() => {
     const fetchModules = async () => {
@@ -88,10 +97,10 @@ const ModulesListPage = () => {
   }, [user]);
 
   useEffect(() => {
-    // Function to fetch semester GPA
+    // Function to fetch total GPA
     const fetchTotalGPA = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/v1/module/calculate-semester-gpa/1`, {
+        const response = await fetch("http://localhost:8000/api/v1/module/calculate-semester-gpa/1", {
           headers: {
             Authorization: `Bearer ${user.token}`,
           },
@@ -99,7 +108,7 @@ const ModulesListPage = () => {
 
         if (response.ok) {
           const json = await response.json();
-          setGPA(json.totalGPA);
+          setTotalGPA(json.totalGPA);
         } else {
           console.error("Error fetching total GPA");
         }
@@ -114,9 +123,9 @@ const ModulesListPage = () => {
   return (
     <div className="modules-list-page">
       {Object.entries(groupedModules).map(([semester, modules]) => (
-        <SemesterPage key={semester} semester={semester} modules={modules} />
+        <SemesterPage key={semester} semester={semester} modules={modules} semesterGPA={modules[0].semesterGPA} />
       ))}
-      <h3 style={{color:"#e7195a"}}>Total GPA: {GPA}</h3>
+      <h3 style={{ color: "#e7195a" }}>Total GPA: {totalGPA}</h3>
     </div>
   );
 };
