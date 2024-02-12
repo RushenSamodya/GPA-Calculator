@@ -74,14 +74,20 @@ const ModulesListPage = () => {
           const json = await response.json();
           const modules = json.modules;
 
-          // Group modules by semester
+          // Group modules by level and semester
           const grouped = {};
           modules.forEach((module) => {
             const semester = module.semester;
-            if (!grouped[semester]) {
-              grouped[semester] = [];
+            const level = Math.ceil(semester / 2);
+
+            if (!grouped[level]) {
+              grouped[level] = {};
             }
-            grouped[semester].push(module);
+            const semesterInLevel = semester % 2 === 0 ? 2 : 1; // Reset semester numbers within level
+            if (!grouped[level][semesterInLevel]) {
+              grouped[level][semesterInLevel] = [];
+            }
+            grouped[level][semesterInLevel].push(module);
           });
 
           setGroupedModules(grouped);
@@ -122,8 +128,13 @@ const ModulesListPage = () => {
 
   return (
     <div className="modules-list-page">
-      {Object.entries(groupedModules).map(([semester, modules]) => (
-        <SemesterPage key={semester} semester={semester} modules={modules} semesterGPA={modules[0].semesterGPA} />
+      {Object.entries(groupedModules).map(([level, semesters]) => (
+        <div key={level} className="level">
+          <h2>Level {level}</h2>
+          {Object.entries(semesters).map(([semester, modules]) => (
+            <SemesterPage key={semester} semester={semester} modules={modules} />
+          ))}
+        </div>
       ))}
       <h3 style={{ color: "#e7195a" }}>Total GPA: {totalGPA}</h3>
     </div>

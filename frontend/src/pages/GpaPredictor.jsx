@@ -128,6 +128,7 @@ const GpaPredictor = () => {
         <TabList>
           <Tab style={{ color: "#1aac83" }}>General Degree</Tab>
           <Tab style={{ color: "#1aac83" }}>Special Degree</Tab>
+          <Tab style={{ color: "#1aac83" }}>Joint Major</Tab>
         </TabList>
 
         <TabPanel>
@@ -187,13 +188,13 @@ const GpaPredictor = () => {
 
           <Tabs>
             <TabList>
-              <Tab style={{ color: "#000000" }}>Combination 1</Tab>
-              <Tab style={{ color: "#000000" }}>Combination 2</Tab>
-              <Tab style={{ color: "#000000" }}>Combination 3</Tab>
-              <Tab style={{ color: "#000000" }}>Combination 4</Tab>
+              <Tab style={{ color: "#000000" }}>IMGT</Tab>
+              <Tab style={{ color: "#000000" }}>CMIS</Tab>
+              <Tab style={{ color: "#000000" }}>ELTN</Tab>
+              <Tab style={{ color: "#000000" }}>MATH</Tab>
             </TabList>
 
-            {/* General Combination 1 */}
+            {/* Special Combination 1 */}
             <TabPanel>
             <div>
               
@@ -205,7 +206,7 @@ const GpaPredictor = () => {
             </div>
             </TabPanel>  
 
-            {/* General Combination 2 */}
+            {/* Speical Combination 2 */}
             <TabPanel>
             <div>
               {generalModules
@@ -216,7 +217,7 @@ const GpaPredictor = () => {
             </div>
             </TabPanel> 
 
-            {/* General Combination 3 */}
+            {/* Special Combination 3 */}
             <TabPanel>
             <div>
               {generalModules
@@ -227,7 +228,7 @@ const GpaPredictor = () => {
             </div>
             </TabPanel> 
 
-            {/* General Combination 4 */}
+            {/* Special Combination 4 */}
             <TabPanel>
             <div>
               {generalModules
@@ -241,6 +242,46 @@ const GpaPredictor = () => {
           </Tabs>
 
     
+        </TabPanel>
+
+        <TabPanel>
+          <h3>Total Credits Required: {90 - totalWeight}</h3>
+          <p>Current GPA: {currentGPA}</p>
+          <h4 style={{ fontWeight: "bold" }}>General Modules</h4>
+
+          <Tabs>
+            <TabList>
+              <Tab style={{ color: "#000000" }}>Combination 1</Tab>
+              <Tab style={{ color: "#000000" }}>Combination 2</Tab>
+              <Tab style={{ color: "#000000" }}>Combination 3</Tab>
+              <Tab style={{ color: "#000000" }}>Combination 4</Tab>
+            </TabList>
+
+            {/* Joint Major Combination 1 */}
+            <TabPanel>
+            <div>
+              {generalModules
+                .filter((module) => module.combinationType === "1")
+                .map((module) => (
+                  <ModuleDetails key={module._id} module={module} />
+                ))}
+            </div>
+
+            </TabPanel>  
+
+            {/* Joint Major Combination 2 */}
+            <TabPanel>
+            <div>
+              {generalModules
+                .filter((module) => module.combinationType === "2")
+                .map((module) => (
+                  <ModuleDetails key={module._id} module={module} />
+                ))}
+            </div>
+              
+            </TabPanel> 
+
+          </Tabs>
         </TabPanel>
       </Tabs>
 
