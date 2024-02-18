@@ -12,7 +12,7 @@ const RepeatModulesPage = () => {
     if (modules) {
       const repeatModulesList = modules.filter(module => {
         // Assuming grades "D", "F", and "I" represent repeat modules
-        return module.result === "D" || module.result === "F" || module.result === "I";
+        return module.result === "D" || module.result === "F" || module.result === "I"|| module.result === "C-";
       });
       setRepeatModules(repeatModulesList);
     }
